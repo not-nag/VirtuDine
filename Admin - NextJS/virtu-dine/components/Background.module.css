@@ -41,9 +41,9 @@
 
 @media (max-width: 768px){
     .background span {
-            font-size: 2rem;
+            font-size: 1.8rem;
             /* Set the font size for emojis */
-            margin: 1rem;
+            margin: 0.6em;
             /* Add margin around each emoji for spacing */
         }
 }
