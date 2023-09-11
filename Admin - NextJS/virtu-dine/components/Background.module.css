@@ -22,7 +22,7 @@
     /* Allow emojis to wrap to the next line */
     overflow: hidden;
     /* Hide any overflowing emojis */
-    justify-content: center;
+    justify-content: space-between;
     /* Center emojis horizontally */
     align-items: center;
     /* Center emojis vertically */
