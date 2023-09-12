@@ -30,7 +30,7 @@ const Homepage: React.FC = () => {
                 get(userRef)
                 .then((snapshot)=>{
                     if(snapshot.exists()){
-                        router.replace('/products')
+                        router.replace('/dashboard')
                     }
                 })
             }

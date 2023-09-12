@@ -32,7 +32,7 @@ const Details: React.FC = () => {
                 console.log('User data has been successfully saved to the database.');
                 setPersistence(auth, browserLocalPersistence)
                 .then(()=>{
-                    router.push('/products');
+                    router.push('/dashboard');
                 })
                 .catch(()=>{
                     console.log("Setting persistence caused error");
@@ -65,7 +65,7 @@ const Details: React.FC = () => {
             get(userRef).then((snapshot)=>{
                 if(snapshot.exists()){
                     setPersistence(auth, browserLocalPersistence).then(()=>{
-                        router.push('/products');
+                        router.push('/dashboard');
                     }).catch(()=>{
                         console.log("Setting persistence caused error");
                     })
