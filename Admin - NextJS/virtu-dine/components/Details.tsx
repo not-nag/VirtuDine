@@ -5,7 +5,7 @@ import styles from './Details.module.css';
 
 import Image from 'next/image';
 
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { auth, database } from '../Firebase/firebase'
 import { FirebaseError } from 'firebase/app';
 import { get, set, ref } from 'firebase/database'
@@ -25,15 +25,18 @@ const Details: React.FC = () => {
     const handleCafeName = () => {
         const userData = {
                 cafeName,
-                menu: {
-                    "golibaje": "wwww.wwww",
-                },
         };
         const userRef = ref(database, `users/${userId}`);
         set(userRef, userData)
             .then(() => {
                 console.log('User data has been successfully saved to the database.');
-                router.push('/products');
+                setPersistence(auth, browserLocalPersistence)
+                .then(()=>{
+                    router.push('/products');
+                })
+                .catch(()=>{
+                    console.log("Setting persistence caused error");
+                })
             })
             .catch((error: FirebaseError) => {
                 console.error('Error saving user data:', error);
@@ -48,6 +51,7 @@ const Details: React.FC = () => {
         const provider = new GoogleAuthProvider();
 
         try{
+            provider.setCustomParameters({prompt: 'select_account'})
             const result = await signInWithPopup(auth, provider);
             const user = result.user
             const uid = user?.uid;
@@ -60,7 +64,11 @@ const Details: React.FC = () => {
 
             get(userRef).then((snapshot)=>{
                 if(snapshot.exists()){
-                    router.push('/products')
+                    setPersistence(auth, browserLocalPersistence).then(()=>{
+                        router.push('/products');
+                    }).catch(()=>{
+                        console.log("Setting persistence caused error");
+                    })
                 }
                 else{
                     setNewUser(true);
@@ -82,7 +90,7 @@ const Details: React.FC = () => {
             <div className={styles.cafe_name}>
                 <p>Let's cook some Magic<span>✨</span></p>
                 <div className={styles.input}>
-                    <input type='text' placeholder="Enter Cafe's / Restaurant's name " value={cafeName} onChange={handleChange} onKeyDown={handleEnter}></input>
+                    <input type='text' placeholder="Type your Cafe's name " maxLength={15} value={cafeName} onChange={handleChange} onKeyDown={handleEnter}></input>
                     <h1 onClick={handleCafeName}>-&gt;</h1>
                 </div>
             </div>

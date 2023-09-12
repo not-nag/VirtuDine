@@ -1,0 +1,48 @@
+.owner{
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    width: 70%;
+}
+
+.owner span{
+    font-size: 22px;
+}
+
+@media (max-width: 768px){
+    .owner{
+        font-size: 30px;
+        top: 5px;
+    }
+
+    .owner span{
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 550px){
+    .owner{
+        font-size: 25px;
+        top: 9px;
+    }
+
+    .owner span{
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 450px) {
+    .owner {
+        font-size: 25px;
+        top: 10px;
+    }
+
+    .owner span {
+        font-size: 14px;
+    }
+}

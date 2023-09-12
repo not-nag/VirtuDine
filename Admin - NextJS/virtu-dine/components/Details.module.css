@@ -89,12 +89,9 @@
 
 
 .input input::placeholder{
-    font-size: 14.5px;
+    font-size: 18px;
 }
 
-.input h1{
-
-}
 
 @media (max-width: 550px) {
 
@@ -127,7 +124,7 @@
 
     .input input{
         height: 35px;
-        width: 220px;
+        width: 200px;
     }
 
     .input h1{
@@ -136,7 +133,7 @@
     }
 
     .input input::placeholder{
-        font-size: 13px;
+        font-size: 15px;
     }
 
     .input input{
