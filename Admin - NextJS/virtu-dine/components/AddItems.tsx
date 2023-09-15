@@ -1,13 +1,20 @@
 import React, { useState, useRef } from "react";
-import { database } from "@/Firebase/firebase";
+import { storage, database } from "@/Firebase/firebase";
+import { ref as sRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import { update, ref } from "@firebase/database";
 import Image from "next/image";
 import styles from './AddItems.module.css'
 
-const AddItems:React.FC =() =>{
+interface AddItemsProps {
+  userID: any;
+}
+
+const AddItems:React.FC<AddItemsProps> =({userID}) =>{
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const[itemName, setItemName] = useState<string>('');
     const[image, setImage] = useState<File | null>(null);
+
 
     const handleClick = () => {
         fileInputRef.current?.click();
@@ -19,12 +26,43 @@ const AddItems:React.FC =() =>{
     };
 
     const handleReset = () => {
+        console.log(userID);
         setItemName('');
         setImage(null);
     }
 
-    const handleSubmit = () => {
-        console.log("submit");
+    const updateDetails = async(downloadURL:any) =>{
+        try{
+            const menuPath = ref(database, `users/${userID}/menu`);
+            const itemData = {
+                [itemName]: downloadURL,
+            };
+            await update(menuPath, itemData);
+            setImage(null);
+            setItemName('');
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    const handleSubmit = async() => {
+        if(!itemName.trim() || !image){
+            window.alert("Enter Item Name and Add the image to continue");
+        }
+        else{
+            const storageRef = sRef(storage);
+            const imagesRef = sRef(storageRef, `${userID}`);
+            const fileName = `${itemName}`;
+            const spaceRef = sRef(imagesRef, fileName);
+            try{
+                await uploadBytes(spaceRef, image);
+                const downloadURL = await getDownloadURL(spaceRef);
+                updateDetails(downloadURL);
+            }catch (error) {
+                console.error('Error uploading image:', error);
+                throw error;
+            }
+        }
     }
     return(
         <>

@@ -7,12 +7,14 @@ import { getDatabase, ref, child, get } from 'firebase/database'
 
 const Products:React.FC = () =>{
     const [ authenticated, setAuthenticated ] = useState<boolean>(false);
+    const [id, setId] = useState<string>('');
     const router = useRouter();
     const [userData, setUserData] = useState(null);
 
     useEffect(()=>{
         checkAuthMiddleware((uid)=>{
             if(uid){
+                setId(uid);
                 const dbRef = ref(getDatabase());
                 get(child(dbRef, `users/${uid}`)).then((snapshot) => {
                     if (snapshot.exists()) {
@@ -37,7 +39,7 @@ const Products:React.FC = () =>{
     if(authenticated){
         return<>
             <Background />
-            <ProductShow userData={userData}/>
+            <ProductShow userData={userData} userID={id}/>
         </>
     }
     else{

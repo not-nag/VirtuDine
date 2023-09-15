@@ -6,9 +6,10 @@ import SearchItems from './SearchItems';
 
 interface ProductShowProps {
   userData: any;
+  userID: any;
 }
 
-const ProductShow:React.FC<ProductShowProps> = ({userData}) => {
+const ProductShow:React.FC<ProductShowProps> = ({userData, userID}) => {
     
     const name = userData.cafeName;
     const menu = userData.menu;
@@ -17,7 +18,7 @@ const ProductShow:React.FC<ProductShowProps> = ({userData}) => {
         <div className={styles.products}>
             <SearchItems />
             <SignOut />
-            <AddItems />
+            <AddItems userID={userID}/>
         </div>
     )
 }
