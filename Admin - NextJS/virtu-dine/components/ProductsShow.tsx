@@ -1,7 +1,8 @@
 import React from 'react'
 import SignOut from './SignOut';
 import styles from './ProductsShow.module.css'
-import CafeName from './CafeName';
+import AddItems from './AddItems';
+import SearchItems from './SearchItems';
 
 interface ProductShowProps {
   userData: any;
@@ -10,11 +11,13 @@ interface ProductShowProps {
 const ProductShow:React.FC<ProductShowProps> = ({userData}) => {
     
     const name = userData.cafeName;
+    const menu = userData.menu;
 
     return(
         <div className={styles.products}>
-            <CafeName name={name} />
+            <SearchItems />
             <SignOut />
+            <AddItems />
         </div>
     )
 }
