@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react"; // Import necessary React components and hooks
 import styles from './Background.module.css'; // Import the CSS module
+import { ToastContainer } from 'react-toastify';
 
 const Background: React.FC = () => {
     // Define an array of emojis
@@ -45,7 +46,9 @@ const Background: React.FC = () => {
     }, []); // This hook runs only once after the component is mounted
 
     // Render a div element with a reference to the containerRef and a specified CSS class
-    return <div ref={containerRef} className={styles.background}></div>;
+    return<>
+            <div ref={containerRef} className={styles.background}></div>
+        </>;
 }
 
 export default Background; // Export the Background component

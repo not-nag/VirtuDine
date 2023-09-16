@@ -2,19 +2,34 @@ import React, { useState, useRef } from "react";
 import { storage, database } from "@/Firebase/firebase";
 import { ref as sRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { update, ref } from "@firebase/database";
+import { toast } from 'react-toastify';
 import Image from "next/image";
 import styles from './AddItems.module.css'
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/router";
 
 interface AddItemsProps {
   userID: any;
 }
 
 const AddItems:React.FC<AddItemsProps> =({userID}) =>{
-
+    const router = useRouter();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const[itemName, setItemName] = useState<string>('');
     const[image, setImage] = useState<File | null>(null);
 
+    const toastify = ()=>{
+        toast.success('🔥 Added succesfully', {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
 
     const handleClick = () => {
         fileInputRef.current?.click();
@@ -31,6 +46,10 @@ const AddItems:React.FC<AddItemsProps> =({userID}) =>{
         setImage(null);
     }
 
+    const handleBack = () => {
+        router.replace('/dashboard');
+    }
+
     const updateDetails = async(downloadURL:any) =>{
         try{
             const menuPath = ref(database, `users/${userID}/menu`);
@@ -38,6 +57,7 @@ const AddItems:React.FC<AddItemsProps> =({userID}) =>{
                 [itemName]: downloadURL,
             };
             await update(menuPath, itemData);
+            toastify();
             setImage(null);
             setItemName('');
         }catch(e){
@@ -65,12 +85,11 @@ const AddItems:React.FC<AddItemsProps> =({userID}) =>{
         }
     }
     return(
-        <>
+        <div className={styles.holder}>
+            <Image src='/back-arrow.png' alt="Go back arrow" className={styles.goBack} onClick={handleBack} width={35} height={35}/>
             <div className={styles.inputItems}>
                 <div className={styles.fastfood}>
-                    <div className={styles.line}></div>
                     <Image src='/fast-food.png' alt="Fast Food icon" width={40} height={40}/>
-                    <div className={styles.line}></div>
                 </div>
                 <p>Add a new item</p>
                 <input type="text" onChange={(e)=>{setItemName(e.target.value)}} value={itemName} placeholder="Name of the food"/>
@@ -82,7 +101,7 @@ const AddItems:React.FC<AddItemsProps> =({userID}) =>{
                 <button type="button" onClick={handleReset} className={styles.reset}>Reset</button>
                 <button type="button" onClick={handleSubmit} className={styles.submit} >Add Item</button>
             </div>
-        </>
+        </div>
     )
 }
 

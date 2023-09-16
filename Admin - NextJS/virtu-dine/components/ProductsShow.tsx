@@ -1,8 +1,8 @@
 import React from 'react'
 import SignOut from './SignOut';
 import styles from './ProductsShow.module.css'
-import AddItems from './AddItems';
 import SearchItems from './SearchItems';
+import IndividualItem from './IndividualItem';
 
 interface ProductShowProps {
   userData: any;
@@ -18,7 +18,7 @@ const ProductShow:React.FC<ProductShowProps> = ({userData, userID}) => {
         <div className={styles.products}>
             <SearchItems />
             <SignOut />
-            <AddItems userID={userID}/>
+            <IndividualItem userData = {userData} />
         </div>
     )
 }
