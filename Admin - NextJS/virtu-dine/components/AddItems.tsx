@@ -67,7 +67,16 @@ const AddItems:React.FC<AddItemsProps> =({userID}) =>{
 
     const handleSubmit = async() => {
         if(!itemName.trim() || !image){
-            window.alert("Enter Item Name and Add the image to continue");
+            toast.error('❌ Enter both Name and Image', {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
         }
         else{
             const storageRef = sRef(storage);

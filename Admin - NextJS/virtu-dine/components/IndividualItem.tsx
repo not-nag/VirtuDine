@@ -2,13 +2,17 @@ import React from "react";
 import styles from './IndividualItem.module.css'
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Card from "./Card";
 
 interface IndividualItem{
     userData:any;
 }
 
 const IndividualItem:React.FC<IndividualItem> = ({userData})=>{
-    const menuItems = Object.entries(userData.menu);
+    let menuItems = null;
+    if(userData.menu){
+        menuItems = Object.entries(userData.menu);
+    }
     const router = useRouter();
     const handleAdd = () => {
         router.replace('/dashboard/add');
@@ -21,8 +25,8 @@ const IndividualItem:React.FC<IndividualItem> = ({userData})=>{
                 <p>Menu</p>
                 <button type="button" onClick={handleAdd} className={styles.redirect_button}>ADD ITEMS</button>
             </div>
-            <div className={styles.holder}></div>
         </div>
+        {!menuItems?<h1 className={styles.noItem}>No Items added.</h1>:<Card menuItems={menuItems} />}
     </>
 }
 
