@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react"; // Import necessary React components and hooks
 import styles from './Background.module.css'; // Import the CSS module
-import { ToastContainer } from 'react-toastify';
+
 
 const Background: React.FC = () => {
     // Define an array of emojis

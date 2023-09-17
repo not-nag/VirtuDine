@@ -79,6 +79,16 @@ const AddItems:React.FC<AddItemsProps> =({userID}) =>{
         });
         }
         else{
+            toast.success('✅ Adding Item', {
+                position: "top-center",
+                autoClose: 500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
             const storageRef = sRef(storage);
             const imagesRef = sRef(storageRef, `${userID}`);
             const fileName = `${itemName}`;
@@ -103,7 +113,7 @@ const AddItems:React.FC<AddItemsProps> =({userID}) =>{
                 <p>Add a new item</p>
                 <input type="text" onChange={(e)=>{setItemName(e.target.value)}} value={itemName} placeholder="Name of the food"/>
                 <button type="button" onClick={handleClick} className={image?styles.button_purple:styles.button_orange}>{image?image.name:'Add Image'}</button>
-                <input type="file" accept=".jpg, .jpeg, .png, .pdf" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
+                <input type="file" accept=".jpg, .jpeg, .png " ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
                 {/* {image && <p>Selected File: {image.name}</p>} */}
             </div>
             <div className={styles.buttons}>

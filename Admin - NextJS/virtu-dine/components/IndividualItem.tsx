@@ -6,9 +6,10 @@ import Card from "./Card";
 
 interface IndividualItem{
     userData:any;
+    uid:any;
 }
 
-const IndividualItem:React.FC<IndividualItem> = ({userData})=>{
+const IndividualItem:React.FC<IndividualItem> = ({userData, uid})=>{
     let menuItems = null;
     if(userData.menu){
         menuItems = Object.entries(userData.menu);
@@ -26,7 +27,7 @@ const IndividualItem:React.FC<IndividualItem> = ({userData})=>{
                 <button type="button" onClick={handleAdd} className={styles.redirect_button}>ADD ITEMS</button>
             </div>
         </div>
-        {!menuItems?<h1 className={styles.noItem}>No Items added.</h1>:<Card menuItems={menuItems} />}
+        {!menuItems?<h1 className={styles.noItem}>No Items added.</h1>:<Card menuItems={menuItems} uid={uid}/>}
     </>
 }
 

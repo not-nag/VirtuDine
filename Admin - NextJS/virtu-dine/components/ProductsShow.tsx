@@ -6,19 +6,17 @@ import IndividualItem from './IndividualItem';
 
 interface ProductShowProps {
   userData: any;
-  userID: any;
+  uid: any;
 }
 
-const ProductShow:React.FC<ProductShowProps> = ({userData, userID}) => {
+const ProductShow:React.FC<ProductShowProps> = ({userData, uid}) => {
     
-    const name = userData.cafeName;
-    const menu = userData.menu;
 
     return(
         <div className={styles.products}>
             <SearchItems />
             <SignOut />
-            <IndividualItem userData = {userData} />
+            <IndividualItem userData = {userData} uid={uid} />
         </div>
     )
 }

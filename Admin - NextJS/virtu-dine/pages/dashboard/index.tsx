@@ -4,6 +4,7 @@ import checkAuthMiddleware from '@/middleware/checkAuthMiddleware'
 import { useRouter } from 'next/router'
 import ProductShow from '@/components/ProductsShow'
 import { getDatabase, ref, child, get } from 'firebase/database'
+import { ToastContainer } from 'react-toastify';
 
 const Products:React.FC = () =>{
     const [ authenticated, setAuthenticated ] = useState<boolean>(false);
@@ -39,7 +40,8 @@ const Products:React.FC = () =>{
     if(authenticated){
         return<>
             <Background />
-            <ProductShow userData={userData} userID={id}/>
+            <ProductShow userData={userData} uid={id}/>
+            <ToastContainer />
         </>
     }
     else{
