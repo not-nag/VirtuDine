@@ -16,6 +16,7 @@ const Card:React.FC<Card> = ({menuItems, uid}) =>{
 
     const router = useRouter();
 
+
     const deleteFile = (item:any) =>{
         const imageRef = sRef(storage, `${uid}/${item}`);
         return deleteObject(imageRef)
@@ -27,30 +28,33 @@ const Card:React.FC<Card> = ({menuItems, uid}) =>{
     }
 
     const handleDelete = async(item:any) => {
-        try{
-            toast.success('☑️ Deleting Item', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            await Promise.all([deleteEntry(item), deleteFile(item)]);
-            router.reload();
-        }catch(error){
-            toast.error('❌ Deletion failed', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+        const userConfirmed = window.confirm("Confirm whether to delete this item.");
+        if(userConfirmed){
+            try{
+                toast.success('✅ Deleting Item', {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                await Promise.all([deleteEntry(item), deleteFile(item)]);
+                router.reload();
+            }catch(error){
+                toast.error('❌ Deletion failed', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }
         }
     }
 
