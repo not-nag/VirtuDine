@@ -45,6 +45,12 @@
     background-color: #ff8600;
 }
 
+.warning{
+    font-size: 20px;
+    margin-top: 150px;
+    text-align: center;
+}
+
 .button_purple {
     background-color: #7a2cbfa7;
 }
@@ -137,6 +143,10 @@
     border-radius: 10px;
     font-size: 90%;
     transition: transform 0.2s ease;
+}
+
+.asterick{
+    color: red;
 }
 
 

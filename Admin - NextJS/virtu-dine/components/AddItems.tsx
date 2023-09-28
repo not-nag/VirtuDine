@@ -120,6 +120,7 @@ const AddItems:React.FC<AddItemsProps> =({userID}) =>{
                 <button type="button" onClick={handleReset} className={styles.reset}>Reset</button>
                 <button type="button" onClick={handleSubmit} className={styles.submit} >Add Item</button>
             </div>
+            <p className={styles.warning}><span className={styles.asterick}>*</span>Images must have transparent background.</p> 
         </div>
     )
 }
