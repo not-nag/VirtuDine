@@ -14,7 +14,7 @@
     /* Make it 100% wide to cover the entire width of the viewport */
     height: 100%;
     /* Make it 100% tall to cover the entire height of the viewport */
-    z-index: -1;
+    z-index: 0;
     /* Set a negative z-index to place it behind other content */
     display: flex;
     /* Use Flexbox for layout */

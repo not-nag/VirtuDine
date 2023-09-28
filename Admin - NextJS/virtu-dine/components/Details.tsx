@@ -26,12 +26,22 @@ const Details: React.FC = () => {
         const userData = {
                 cafeName,
         };
+        const cafeData = {
+            [cafeName]: userId,
+        };
         const userRef = ref(database, `users/${userId}`);
+        const cafeRef = ref(database, `cafes`)
         set(userRef, userData)
             .then(() => {
-                console.log('User data has been successfully saved to the database.');
                 setPersistence(auth, browserLocalPersistence)
                 .then(()=>{
+                    set(cafeRef, cafeData)
+                    .then(()=>{
+                        console.log("Cafe sub-details set successfully")
+                    })
+                    .catch((e)=>{
+                        console.error(e);
+                    })
                     router.push('/dashboard');
                 })
                 .catch(()=>{

@@ -10,12 +10,16 @@ import { ref as sRef, deleteObject } from 'firebase/storage';
 interface Card{
     menuItems:any;
     uid:any;
+    search:any;
 }
 
-const Card:React.FC<Card> = ({menuItems, uid}) =>{
+const Card:React.FC<Card> = ({menuItems, uid, search}) =>{
 
     const router = useRouter();
 
+    const filteredMenuItems = menuItems.filter((item: any) => {
+        return item[0].toLowerCase().includes(search.toLowerCase());
+    });
 
     const deleteFile = (item:any) =>{
         const imageRef = sRef(storage, `${uid}/${item}`);
@@ -41,7 +45,8 @@ const Card:React.FC<Card> = ({menuItems, uid}) =>{
                     progress: undefined,
                     theme: "colored",
                 });
-                await Promise.all([deleteEntry(item), deleteFile(item)]);
+                await deleteEntry(item);
+                await deleteEntry(item);
                 router.reload();
             }catch(error){
                 toast.error('❌ Deletion failed', {
@@ -61,15 +66,21 @@ const Card:React.FC<Card> = ({menuItems, uid}) =>{
 
     return( <div className={styles.card_holder}>
         <div className={styles.cardContainer}>
-            {menuItems.map((item:any, customIndex:any)=>(
+            {filteredMenuItems.length === 0 ? (
+                <h1 className={styles.noItem}>No Items match your search.</h1>
+             ) : (
+            filteredMenuItems.map((item: any, customIndex: any) => (
                 <div key={customIndex} className={styles.card}>
-                    <span className={styles.delete} onClick={()=>{handleDelete(item[0])}}>❌</span>
-                    <Image src={item[1]} alt='Item Image' width={190} height={190} className={styles.image}/>
-                    <div className={styles.pHolder}>
-                        <p>{item[0]}</p>
-                    </div>
+                <span className={styles.delete} onClick={() => handleDelete(item[0])}>
+                ❌
+                </span>
+                <Image src={item[1]} alt="Item Image" width={190} height={190} className={styles.image} />
+                <div className={styles.pHolder}>
+                    <p>{item[0]}</p>
                 </div>
-            ))}
+                </div>
+            ))
+        )}
         </div>
     </div>);    
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SignOut from './SignOut';
 import styles from './ProductsShow.module.css'
 import SearchItems from './SearchItems';
@@ -10,13 +10,17 @@ interface ProductShowProps {
 }
 
 const ProductShow:React.FC<ProductShowProps> = ({userData, uid}) => {
-    
+    const [search, setSearch] = useState<string>('');
+
+    const handleSearch = (query: string) => {
+        setSearch(query);
+    };
 
     return(
         <div className={styles.products}>
-            <SearchItems />
+            <SearchItems onSearch={handleSearch}/>
             <SignOut />
-            <IndividualItem userData = {userData} uid={uid} />
+            <IndividualItem userData = {userData} uid={uid} search={search}/>
         </div>
     )
 }
